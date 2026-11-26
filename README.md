@@ -1,30 +1,47 @@
 # DAMS: Document Automation Management System
 
-FastAPI + SQLAlchemy + SQLite backend, React + Vite + Tailwind frontend.
+An Object-Oriented Programming (OOP) project developed using Python. The system helps users create, edit, and manage documents using ready-made templates.
 
-## What this version adds
+## Technologies Used
 
-1. **Owl identity ("Dami")**: one purple-and-white owl with eight poses (welcome, reading/loading, celebrate, confused, approved stamp, empty, error, idle), plus an original owl-on-a-page logo and favicon.
-2. **Designed templates**: 13 built-in templates (8 school, 5 administrative) in seven layouts: letter, framed certificates (landscape), memo, announcement, report and form. The Word and PDF downloads use the same layout as the preview (headers, signature blocks, reference numbers, page numbers, certificate frames).
-3. **AI that assists**: on long-text fields and on the AI Assistant page you can *Improve, Rewrite formally, Shorten, Fix grammar* or *Suggest text*. The result is shown next to the original and **only applied if you press Accept**. Select part of a field to change just that part. Nothing is sent without a one-time confirmation; if no AI provider is configured the buttons are disabled and no text is invented.
-4. **Live preview beside the form**: the page redraws as you type (debounced, rendered by the same engine as the downloads).
+- **Backend:** FastAPI, SQLAlchemy, SQLite
+- **Frontend:** React, Vite, Tailwind CSS
+- **Document Generation:** Python-based Word and PDF generation
 
-Also included: login/registration with hashed passwords, roles (Administrator, Staff, Approver) enforced on the backend, approval workflow with comments and history, version history, notifications, activity log, favorites and recently used templates, light/dark mode, collapsible sidebar, reduced-motion support.
+## Features
 
-## Run it
+- **User Accounts:** Users can register and log in using their accounts. Passwords are securely hashed.
+- **User Roles:** The system has three roles: Administrator, Staff, and Approver. Each role has different access and permissions.
+- **Document Templates:** Includes 13 built-in templates for school and administrative documents.
+- **Document Generator:** Users can fill out a template and generate a document without creating one from scratch.
+- **Live Preview:** Users can see how their document looks while entering information.
+- **AI Assistant:** Provides options to improve, rewrite, shorten, and correct text. Users can review the suggested changes before applying them.
+- **Approval System:** Documents can be submitted for approval, with options to approve or reject them and leave comments.
+- **Document Management:** Users can save, edit, delete, and download their documents in Word and PDF formats.
+- **Version History:** Keeps track of previous document versions.
+- **Notifications and Activity Logs:** Shows document updates and other important activities.
+- **Other Features:** Includes favorites, recently used templates, light and dark mode, and a collapsible sidebar.
 
-Backend (Windows PowerShell):
+The system also includes an owl character named Dami, which appears in different situations, such as loading, welcoming users, showing errors, and confirming actions.
+
+## How to Run the Project
+
+### Backend Setup
+
+Open a terminal and run:
 
 ```powershell
 cd backend
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-copy ..\.env.example .env      # optional: add AI settings
+copy ..\.env.example .env
 uvicorn main:app --reload
 ```
 
-Frontend (second terminal):
+### Frontend Setup
+
+Open another terminal and run:
 
 ```powershell
 cd frontend
@@ -32,17 +49,39 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173. **The first account you register becomes the administrator.** Existing documents from the old version are assigned to that account. The database is upgraded in place (`migrate.py`), and your existing templates are kept.
+Open the application in your browser:
 
-### Optional AI setup
-Put these in `backend/.env` (never in the frontend): `AI_PROVIDER` (`anthropic` or `openai`), `AI_API_KEY`, and `AI_MODEL` (required for `openai`). Without them everything else works.
+http://localhost:5173
 
-## Smoke test
-1. Register (you become admin) → Templates → *Create document* on "Certificate of Completion".
-2. Type a name; watch the preview update. Clear a required field and press *Submit*: the owl asks for the missing detail.
-3. Save draft → download Word and PDF from the success dialog.
-4. Register a second account in a private window; promote it to *Approver* in Settings → Users. (By default you cannot approve your own document; set `ALLOW_SELF_APPROVAL=true` for a one-person demo.)
-5. Submit a document, then approve/reject it from *Approvals* and check the owner's notification.
+**Note:** The first account registered will automatically become the administrator.
 
-## Verification status (be aware)
-The latest changes were written in an offline sandbox where FastAPI, SQLAlchemy and the npm packages could not be installed. What **was** verified there: all backend files compile; all 13 templates render to blocks, valid `.docx` and `.pdf` files (empty and filled); the whole frontend bundles with esbuild (syntax and imports resolve). What was **not** run: the API server, the included `backend/tests`, and the UI in a browser. Please run `pytest` inside `backend` (after installing requirements) and click through the smoke test above; report anything that fails.
+## AI Configuration (Optional)
+
+To use the AI Assistant, add the following settings to `backend/.env`:
+
+- `AI_PROVIDER` – Choose `anthropic` or `openai`.
+- `AI_API_KEY` – Your API key.
+- `AI_MODEL` – Required when using OpenAI.
+
+The other system features can still be used without an AI configuration.
+
+## Testing the System
+
+You can check the main features by following these steps:
+
+1. Create an account and log in.
+2. Go to Templates and select a document template.
+3. Enter the required information and check the live preview.
+4. Save the document and try downloading it in Word and PDF formats.
+5. Create another account and assign it the Approver role.
+6. Submit a document for approval.
+7. Log in using the Approver account and try approving or rejecting the document.
+8. Check if the document owner receives a notification.
+
+## Testing and Verification
+
+Some parts of the system were checked during development, including the Python files, document templates, and frontend build.
+
+However, the backend API, automated tests, and complete frontend functionality still need to be tested in a running environment.
+
+It is recommended to install the required dependencies, run the application, and test the main features to make sure everything works properly.
